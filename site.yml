@@ -1,0 +1,12 @@
+---
+
+- name: Compute Nodes
+  hosts: compute
+  strategy: free
+  become: yes
+  vars:
+    - gpu: True
+
+  roles: 
+    - { role: ansible-role-cuda, tags: [ 'cuda', 'nvidia' ] }
+
