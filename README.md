@@ -15,6 +15,11 @@ ssh in and try to use the GPGPU:
 $ sudo nvidia-smi
 </pre>
 
+Or use ansible for this too:
+<pre>
+$ ansible -i inventory -m command -a "/usr/bin/nvidia-smi" all
+</pre>
+
 Cool Features We Could Do
 -------------------------
 
