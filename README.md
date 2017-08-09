@@ -24,3 +24,31 @@ Or use ansible for this too:
 <pre>
 $ ansible -i inventory -m command -a "/usr/bin/nvidia-smi" all
 </pre>
+
+FAQ:
+-----
+
+The nvidia-kmod DKMS needs to match the running kernel or nothing works. To verify that DKMS is configured **incorrectly** run:
+
+<pre>
+$ dkms status
+nvidia, 375.51: added
+</pre>
+
+Fix this by:
+ - yum update
+ - reboot
+ - dkms autoinstall
+
+Good looking DKMS status looks like this:
+<pre>
+$ dkms status
+nvidia, 375.51, 3.10.0-514.26.2.el7.x86_64, x86_64: installed
+</pre>
+
+Cool things we could do:
+----------
+
+For when spawning many GPUs - don't waste floating IPs and use a bastion host
+
+http://docs.ansible.com/ansible/latest/intro_dynamic_inventory.html#example-openstack-external-inventory-script

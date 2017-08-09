@@ -3,3 +3,5 @@
   path: roles
   version: v1.5.3
 
+- src: https://github.com/CSCfi/ansible-role-hosts-inventory
+  path: roles

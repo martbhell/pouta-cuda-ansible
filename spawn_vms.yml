@@ -13,7 +13,7 @@
     demo_key: Johans
     demo_sg: demo-sg-cuda-johan
     demo_project: "{{ ansible_env.OS_PROJECT_NAME }}"
-    demo_security_groups: default,{{ demo_sg }},default-{{ demo_project }} # don't add spaces here!
+    demo_security_groups: default,{{ demo_sg }},default-{{ demo_project }} # don't add spaces here!
     demo_network: "{{ demo_project }}"
     demo_floating_pool: "public"
 
@@ -29,29 +29,15 @@
         port_range_max: 22
         remote_ip_prefix: "{{ ansible_default_ipv4.address }}/32"
 
-    - name: Create a virtual machine
+    - name: Create virtual machines without floating IPs
       register: result
       os_server:
-        name: cuda-demo-4
+        name: "cuda-pouta-demo-{{ item }}"
         image: "CentOS 7"
         flavor: gpu.1.4gpu
         key_name: "{{ demo_key }}"
         security_groups: "{{ demo_security_groups }}"
         network: "{{ demo_project }}"
-        auto_ip: True
+        auto_ip: False
         wait: True
-
-    - name: print result if -vvv
-      debug: var=result verbosity=3
-    - name: print addresses from the demo_network
-      debug: var=result.openstack.addresses[demo_network] verbosity=3
-
-    - name: Store the auto-allocated floating IP address
-      set_fact: floating_ip={{ result.openstack.addresses[demo_network][1]['addr'] }}
-    - name: Add new host to inventory
-      add_host: name={{ floating_ip }} groups=gpgpunodes
-    - name: clear ssh known_hosts
-      known_hosts: name={{ floating_ip }} state=absent
-      when: result | changed
-    - name: Wait for instance to be ready
-      wait_for: host={{ floating_ip }} port=22 search_regex=OpenSSH delay=5
+      with_items: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]

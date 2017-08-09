@@ -1,15 +1,4 @@
 ---
 
-# first spawn a VM in openstack
 - include: spawn_a_vm.yml
-
-- name: GPGPU Nodes
-  hosts: gpgpunodes
-  strategy: free
-  become: yes
-  vars:
-    - gpu: True
-
-  roles: 
-    - { role: ansible-role-cuda, tags: [ 'cuda', 'nvidia' ] }
-
+- include: config.yml
