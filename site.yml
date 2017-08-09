@@ -1,7 +1,10 @@
 ---
 
-- name: Compute Nodes
-  hosts: compute
+# first spawn a VM in openstack
+- include: spawn_a_vm.yml
+
+- name: GPGPU Nodes
+  hosts: gpgpunodes
   strategy: free
   become: yes
   vars:

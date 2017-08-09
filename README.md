@@ -1,14 +1,19 @@
 pouta-cuda-demo
 --------------
 
+The spawn a VM playbook is based on https://github.com/CSCfi/pouta-ansible-demo - more usage instructions are available there.
+
 Usage:
 
- - Create a hosts file and add your VM there
+ - source the openrc file
  - Run ansible.
 
 <pre>
-ansible-playbook -i inventory site.yml 
+$ source project-openrc.sh
+$ ansible-playbook -u cloud-user site.yml
 </pre>
+
+Now you'll need to assign a public IP manually if the auto_ip didn't assign one..
 
 ssh in and try to use the GPGPU:
 <pre>
@@ -19,8 +24,3 @@ Or use ansible for this too:
 <pre>
 $ ansible -i inventory -m command -a "/usr/bin/nvidia-smi" all
 </pre>
-
-Cool Features We Could Do
--------------------------
-
- - Spawn the instance with ansible
