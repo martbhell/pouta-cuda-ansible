@@ -5,6 +5,7 @@
   strategy: free
   become: yes
   vars:
+    - cuda_init: False
     - gpu: True
     - hosts_file_to_populate: "/etc/hosts"
     - hosts_file_ansible_group_to_hosts_file: "{{ groups.extra_dns }}"
