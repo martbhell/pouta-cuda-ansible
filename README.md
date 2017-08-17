@@ -35,16 +35,33 @@ $ dkms status
 nvidia, 375.51: added
 </pre>
 
-Fix this by:
+Fix this on CentOS7 by:
  - yum update
  - reboot
  - dkms autoinstall
+
+Fix this on Ubuntu 16.04 by:
+ - apt upgrade
+ - install the linux-headers for the kernel (dkms autoinstall tells you which)
+  - apt install linux-headers-$(uname -r)
+ - dkms autoinstall
+ - reboot
 
 Good looking DKMS status looks like this:
 <pre>
 $ dkms status
 nvidia, 375.51, 3.10.0-514.26.2.el7.x86_64, x86_64: installed
 </pre>
+
+or
+
+<pre>
+$ dkms status
+nvidia-384, 384.66, 4.4.0-79-generic, x86_64: installed
+nvidia-384, 384.66, 4.4.0-92-generic, x86_64: installed
+</pre>
+
+
 
 Cool things we could do:
 ----------

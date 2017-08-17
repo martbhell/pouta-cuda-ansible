@@ -1,7 +1,7 @@
 ---
 
 - name: GPGPU Nodes
-  hosts: gpgpunodes
+  hosts: gpgpunodes,cuda
   strategy: free
   become: yes
   vars:
@@ -18,12 +18,21 @@
       with_items:
         - "epel-release"
         - "kernel-headers"
+      when: ansible_os_family == "RedHat"
 
     - name: update kernels and restart if we changed anything
       package:
         name: "kernel*"
         state: latest
+        update_cache: True
       register: reg_update_kernels
+
+    #TODO: how to best fetch linux-headers- the version we get after rebooting?
+    # grub?
+    - name: install linux linux-headers
+      action: shell apt install -y linux-headers-$(uname -r)
+      ignore_errors: True
+      when: ansible_os_family == "Debian"
 
     - name: restart machine if packages were updated
       command: shutdown -r now "Ansible updates triggered. Rebooting now"
